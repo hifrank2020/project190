@@ -146,7 +146,7 @@
 // Script (see apps_script.gs) between the quotes below. Until you
 // do, the chart runs on the seed data only and Save is disabled.
 // ---------------------------------------------------------------
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS9bpReuQ0wq1hvOMxxmY9925Q_u4INkCCLfdcg62O8iCiLbSatqeCLHHQtlp2Jq0Egw/exec';
+const SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
 // ---------------------------------------------------------------
 // SEED DATA — used on first load / as a fallback if the Sheet
@@ -426,7 +426,8 @@ async function loadSavedData(){
     return;
   }
   try{
-    const res = await fetch(SCRIPT_URL);
+    const bustCache = SCRIPT_URL + (SCRIPT_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+    const res = await fetch(bustCache, { cache: 'no-store' });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     const saved = await res.json();
     Object.keys(saved).forEach(date => {
